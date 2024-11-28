@@ -1,6 +1,6 @@
 # 部署memos.top
 
->[!tip|label: 提示]
+>[!tip]  提示
 
 环境变量:
 
