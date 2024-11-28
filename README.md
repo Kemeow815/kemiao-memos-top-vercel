@@ -1,2 +1,11 @@
-# memos-top-vercel
-部署memos.top
+# 部署memos.top
+
+>[!tip|label: 提示]
+MEMOS_HOST
+MEMOS_USER_ID
+MEMOS_LIMIT
+MEMOS_TITTLE
+MEMOS_HEAD
+MEMOS_MENU
+MEMOS_ICON
+MEMOS_FOOTER
