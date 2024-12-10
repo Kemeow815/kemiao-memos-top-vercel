@@ -14,7 +14,7 @@ const limit = memo.limit;
 const memosHost = memo.host.replace(/\/$/, '');
 
 const filter = `creator=='users/${memo.creatorId}'&&visibilities==['PUBLIC']`;
-const memoUrl = `${memosHost}/api/v1/memos?filter=${encodeURIComponent(filter)}&pageSize=${limit}`;
+const memoUrl = `${memosHost}/api/v1/memos?filter=${encodeURIComponent(filter)}&pageSize=${limit}&view=MEMO_VIEW_FULL`;
 
 let page = 1;
 let nextPageToken = '';
