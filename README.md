@@ -17,4 +17,4 @@ MEMOS_ICON=          # 图标
 MEMOS_FOOTER=        #底部支持HTML代码
 ```
 
-[![https://vercel.com/new/clone?repository-url=https%3A%2F%2Fgithub.com%2Fjkjoy%2Fmemos-top-vercel%2Ftree%2Fmain%2F](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https%3A%2F%2Fgithub.com%2Fjkjoy%2Fmemos-top-vercel%2Ftree%2Fmain%2F&teamSlug=jkjkjoy)
+[![https://vercel.com/new/clone?repository-url=https%3A%2F%2Fgithub.com%2Fjkjoy%2Fmemos-top-vercel%2Ftree%2Fmain%2F](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https%3A%2F%2Fgithub.com%2Fjkjoy%2Fmemos-top-vercel%2Ftree%2Fmain%2F)
