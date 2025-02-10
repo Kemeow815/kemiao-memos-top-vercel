@@ -14,7 +14,7 @@ const limit = memo.limit;
 const memosHost = memo.host.replace(/\/$/, '');
 
 const filter = `creator=='users/${memo.creatorId}'&&visibilities==['PUBLIC']`;
-const memoUrl = `${memosHost}/api/v1/memos?filter=${encodeURIComponent(filter)}&pageSize=${limit}&view=MEMO_VIEW_FULL`;
+const memoUrl = `${memosHost}/api/v1/memos?oldfilter=${encodeURIComponent(filter)}&pageSize=${limit}&view=MEMO_VIEW_FULL`;
 
 let page = 1;
 let nextPageToken = '';
@@ -129,7 +129,9 @@ function updateHTML(data, userInfo) {
             .replace(TAG_REG, "<span class='tag-span'><a rel='noopener noreferrer' href='#$1'>#$1</a></span>");
         
         const locationHtml = getLocationHtml(item.location);
-
+        //获取上个版本的uid
+        const uid = item.name.split('/')[1];
+        
         memoContREG = marked.parse(memoContREG)
             .replace(BILIBILI_REG, "<div class='video-wrapper'><iframe src='//www.bilibili.com/blackboard/html5mobileplayer.html?bvid=$1&as_wide=1&high_quality=1&danmaku=0' scrolling='no' border='0' frameborder='no' framespacing='0' allowfullscreen='true' style='position:absolute;height:100%;width:100%;'></iframe></div>")
             .replace(YOUTUBE_REG, "<div class='video-wrapper'><iframe src='https://www.youtube.com/embed/$1' title='YouTube video player' frameborder='0' allow='accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture' allowfullscreen title='YouTube Video'></iframe></div>")
@@ -170,7 +172,7 @@ function updateHTML(data, userInfo) {
 
         const relativeTime = getRelativeTime(new Date(item.createTime));
 
-        memoResult += `<li class="timeline"><div class="memos__content" style="--avatar-url: url(${userInfo.avatarurl})"><div class="memos__text"><div class="memos__userinfo"><a href=${userInfo.userurl} target="_blank" ><div>${userInfo.memoname}</div></a><div><svg viewBox="0 0 24 24" aria-label="认证账号" class="memos__verify"><g><path d="M22.5 12.5c0-1.58-.875-2.95-2.148-3.6.154-.435.238-.905.238-1.4 0-2.21-1.71-3.998-3.818-3.998-.47 0-.92.084-1.336.25C14.818 2.415 13.51 1.5 12 1.5s-2.816.917-3.437 2.25c-.415-.165-.866-.25-1.336-.25-2.11 0-3.818 1.79-3.818 4 0 .494.083.964.237 1.4-1.272.65-2.147 2.018-2.147 3.6 0 1.495.782 2.798 1.942 3.486-.02.17-.032.34-.032.514 0 2.21 1.708 4 3.818 4 .47 0 .92-.086 1.335-.25.62 1.334 1.926 2.25 3.437 2.25 1.512 0 2.818-.916 3.437-2.25.415.163.865.248 1.336.248 2.11 0 3.818-1.79 3.818-4 0-.174-.012-.344-.033-.513 1.158-.687 1.943-1.99 1.943-3.484zm-6.616-3.334l-4.334 6.5c-.145.217-.382.334-.625.334-.143 0-.288-.04-.416-.126l-.115-.094-2.415-2.415c-.293-.293-.293-.768 0-1.06s.768-.294 1.06 0l1.77 1.767 3.825-5.74c.23-.345.696-.436 1.04-.207.346.23.44.696.21 1.04z"></path></g></svg></div><div class="memos__id">@${userInfo.memousername}</div></div><p>${memoContREG}</p></div><div class="memos__meta"><small class="memos__date">${relativeTime} • From「<a href="${memosHost}/m/${item.uid}" target="_blank">Memos</a>」${locationHtml}</small></div></div></li>`;
+        memoResult += `<li class="timeline"><div class="memos__content" style="--avatar-url: url(${userInfo.avatarurl})"><div class="memos__text"><div class="memos__userinfo"><a href=${userInfo.userurl} target="_blank" ><div>${userInfo.memoname}</div></a><div><svg viewBox="0 0 24 24" aria-label="认证账号" class="memos__verify"><g><path d="M22.5 12.5c0-1.58-.875-2.95-2.148-3.6.154-.435.238-.905.238-1.4 0-2.21-1.71-3.998-3.818-3.998-.47 0-.92.084-1.336.25C14.818 2.415 13.51 1.5 12 1.5s-2.816.917-3.437 2.25c-.415-.165-.866-.25-1.336-.25-2.11 0-3.818 1.79-3.818 4 0 .494.083.964.237 1.4-1.272.65-2.147 2.018-2.147 3.6 0 1.495.782 2.798 1.942 3.486-.02.17-.032.34-.032.514 0 2.21 1.708 4 3.818 4 .47 0 .92-.086 1.335-.25.62 1.334 1.926 2.25 3.437 2.25 1.512 0 2.818-.916 3.437-2.25.415.163.865.248 1.336.248 2.11 0 3.818-1.79 3.818-4 0-.174-.012-.344-.033-.513 1.158-.687 1.943-1.99 1.943-3.484zm-6.616-3.334l-4.334 6.5c-.145.217-.382.334-.625.334-.143 0-.288-.04-.416-.126l-.115-.094-2.415-2.415c-.293-.293-.293-.768 0-1.06s.768-.294 1.06 0l1.77 1.767 3.825-5.74c.23-.345.696-.436 1.04-.207.346.23.44.696.21 1.04z"></path></g></svg></div><div class="memos__id">@${userInfo.memousername}</div></div><p>${memoContREG}</p></div><div class="memos__meta"><small class="memos__date">${relativeTime} • From「<a href="${memosHost}/m/${uid}" target="_blank">Memos</a>」${locationHtml}</small></div></div></li>`;
     }
 
     const resultAll = `<ul>${memoResult}</ul>`;
@@ -248,40 +250,16 @@ themeToggle.addEventListener("click", () => {
 // Darkmode End
 
 // Memos Total Start
-// Get Memos total count
 function getTotal() {
-    let pageUrl;
-    let totalUrl;
     const filter = `creator=='users/${memo.creatorId}'&&visibilities==['PUBLIC']`;
-
-    // 第一次请求：获取 pageSize
-    pageUrl = `${memosHost}/api/v1/memos?pageSize=1&pageToken=&&filter=${encodeURIComponent(filter)}`;
-    fetch(pageUrl)
+//使用一个无穷大的数字来获取全部memos
+    fetch(`${memosHost}/api/v1/memos?pageSize=999999999&oldfilter=${encodeURIComponent(filter)}`)
         .then(res => res.json())
         .then(resdata => {
             if (resdata && resdata.memos) {
-                // 从返回的数据中提取 pageSize
-                const pageSize = resdata.memos.map(memo => {
-                    const match = memo.name.match(/\d+/);
-                    return match ? parseInt(match[0], 10) : null;
-                }).filter(num => num !== null)[0]; // 取第一个匹配到的数字
-
-                if (pageSize) {
-                    // 第二次请求：使用获取到的 pageSize
-                    totalUrl = `${memosHost}/api/v1/memos?pageSize=${pageSize}&filter=${encodeURIComponent(filter)}`;
-                    return fetch(totalUrl);
-                } else {
-                    throw new Error('No valid pageSize found');
-                }
-            }
-        })
-        .then(res => res.json())
-        .then(resdata => {
-            if (resdata && resdata.memos) {
-                var allnums = resdata.memos.length;
                 var memosCount = document.getElementById('total');
                 if (memosCount) {
-                    memosCount.innerHTML = allnums;
+                    memosCount.innerHTML = resdata.memos.length;
                 }
             }
         })
@@ -295,7 +273,7 @@ window.onload = getTotal;
 
 // 解析豆瓣 Start
 function fetchDB() {
-    var dbAPI = 'https://cors.ima.cm/https://api.loliko.cn/';
+    var dbAPI = 'https://api.loliko.cn/';
     var dbA = document.querySelectorAll(".timeline a[href*='douban.com/subject/']:not([rel='noreferrer'])") || '';
     if (dbA) {
                 const promises = [];
