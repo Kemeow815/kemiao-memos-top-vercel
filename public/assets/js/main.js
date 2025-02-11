@@ -12,9 +12,7 @@ if (typeof memos !== "undefined") {
 
 const limit = memo.limit;
 const memosHost = memo.host.replace(/\/$/, '');
-
-const filter = `creator=='users/${memo.creatorId}'&&visibilities==['PUBLIC']`;
-const memoUrl = `${memosHost}/api/v1/memos?oldfilter=${encodeURIComponent(filter)}&pageSize=${limit}&view=MEMO_VIEW_FULL`;
+const memoUrl = `${memosHost}/api/v1/memos?parent=users/${memo.creatorId}&pageSize=${limit}`;
 
 let page = 1;
 let nextPageToken = '';
@@ -251,9 +249,8 @@ themeToggle.addEventListener("click", () => {
 
 // Memos Total Start
 function getTotal() {
-    const filter = `creator=='users/${memo.creatorId}'&&visibilities==['PUBLIC']`;
 //使用一个无穷大的数字来获取全部memos
-    fetch(`${memosHost}/api/v1/memos?pageSize=999999999&oldfilter=${encodeURIComponent(filter)}`)
+    fetch(`${memosHost}/api/v1/memos?pageSize=999999999&parent=users/${memo.creatorId}`)
         .then(res => res.json())
         .then(resdata => {
             if (resdata && resdata.memos) {
