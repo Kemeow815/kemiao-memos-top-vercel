@@ -1,8 +1,11 @@
 # 部署memos.top
-
+## 自托管memos
+参照 https://blog.memos.ee/archives/21.html
+## 部署到vercel
 >[!tip] 
  提示
- 适配v0.24.0 以及以上版本
+ `main`适配v0.24.2 
+ 若使用其他版本的`memos`请参考`Releases`中的版本
 
 环境变量:
 
