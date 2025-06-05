@@ -55,7 +55,7 @@ app.get('/', (req, res) => {
 			<script>
 				document.write(new Date().getFullYear())
 			</script>
-            <a href="https://www.eallion.com/" target="_blank" rel="noopener noreferrer" class="hidden">Charles 'eallion' Chin</a> All Rights Reserved.
+            ${memosTittle} All Rights Reserved.
 		${memosFooter}
         </p>
 	</footer>
