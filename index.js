@@ -6,11 +6,11 @@ const app = express();
 const memosHost = process.env.MEMOS_HOST || 'https://memos.050815.xyz/';
 const memosLimit = process.env.MEMOS_LIMIT || '10';
 const memosUserId = process.env.MEMOS_USER_ID || '1';
-const memosTittle = process.env.MEMOS_TITTLE || '喵言堂';
+const memosTittle = process.env.MEMOS_TITTLE || 'Memos';
 const memosHead = process.env.MEMOS_HEAD || '';
 const memosMenu = process.env.MEMOS_MENU || '';
 const memosFooter = process.env.MEMOS_FOOTER || '';
-const memosIcon = process.env.MEMOS_ICON || 'https://cn.cravatar.com/avatar/1F6C8947D35A8186A1647009BA8BC5F2?size=256';
+const memosIcon = process.env.MEMOS_ICON || '';
 // 静态文件服务
 app.use(express.static(path.join(__dirname, 'public')));
 // 动态生成 HTML
@@ -55,7 +55,7 @@ app.get('/', (req, res) => {
 			<script>
 				document.write(new Date().getFullYear())
 			</script>
-            ${memosTittle} All Rights Reserved.
+            <a href="https://www.eallion.com/" target="_blank" rel="noopener noreferrer" class="hidden">Charles 'eallion' Chin</a> All Rights Reserved.
 		${memosFooter}
         </p>
 	</footer>
