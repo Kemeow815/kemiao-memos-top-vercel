@@ -1,6 +1,6 @@
 // Memos Start
 const memo = {
-    host: 'https://demo.usememos.com/',
+    host: 'https://memos.050815.xyz/',
     limit: 10,
     creatorId: '1',
     domId: '#memos',
