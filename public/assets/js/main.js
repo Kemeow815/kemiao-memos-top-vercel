@@ -4,6 +4,7 @@ const memo = {
     limit: 10,
     creatorId: '1',
     domId: '#memos',
+    language: navigator.language.toLowerCase().startsWith('zh') ? 'zh' : 'en',
 };
 
 if (typeof memos !== "undefined") {
@@ -12,7 +13,8 @@ if (typeof memos !== "undefined") {
 
 const limit = memo.limit;
 const memosHost = memo.host.replace(/\/$/, '');
-const memoUrl = `${memosHost}/api/v1/memos?parent=users/${memo.creatorId}&pageSize=${limit}`;
+// API 端点适配 0.18.2 - 使用 creatorId 参数
+const memoUrl = `${memosHost}/api/v1/memos?creatorId=${memo.creatorId}&pageSize=${limit}`;
 
 let page = 1;
 let nextPageToken = '';
@@ -21,13 +23,12 @@ let btnRemove = 0;
 const memoDom = document.querySelector(memo.domId);
 const loadBtn = '<button class="load-btn button-load">努力加载中……</button>';
 
-let userInfo; // 定义全局变量 userInfo
+let userInfo;
 
 if (memoDom) {
     memoDom.insertAdjacentHTML('afterend', loadBtn);
     fetchUserInfo().then(info => {
-        userInfo = info; // 赋值给全局变量 userInfo
-        // 更新 banner 信息
+        userInfo = info;
         const bannerSubinfo = document.querySelector('.info');
         if (bannerSubinfo) {
             bannerSubinfo.textContent = userInfo.description;
@@ -38,7 +39,7 @@ if (memoDom) {
     const btn = document.querySelector("button.button-load");
     btn.addEventListener("click", () => {
         btn.textContent = '努力加载中……';
-        updateHTML(nextDom, userInfo); // 传递 userInfo 参数
+        updateHTML(nextDom, userInfo);
         if (nextDom.length < limit) {
             btn.remove();
             btnRemove = 1;
@@ -247,8 +248,7 @@ themeToggle.addEventListener("click", () => {
 
 // Memos Total Start
 function getTotal() {
-//使用一个无穷大的数字来获取全部memos
-    fetch(`${memosHost}/api/v1/memos?pageSize=999999999&parent=users/${memo.creatorId}`)
+    fetch(`${memosHost}/api/v1/memos?pageSize=999999999&creatorId=${memo.creatorId}`) // 适配 creatorId
         .then(res => res.json())
         .then(resdata => {
             if (resdata && resdata.memos) {
@@ -271,7 +271,7 @@ function fetchDB() {
     var dbAPI = 'https://api.loliko.cn/';
     var dbA = document.querySelectorAll(".timeline a[href*='douban.com/subject/']:not([rel='noreferrer'])") || '';
     if (dbA) {
-                const promises = [];
+        const promises = [];
         for (var i = 0; i < dbA.length; i++) {
             _this = dbA[i];
             var dbHref = _this.href;
@@ -309,7 +309,7 @@ function fetchDB() {
                     bookShow(dbHref, this_item);
                 }
             }
-        }// for end
+        }
         Promise.all(promises).then(() => {
             console.log('All fetch operations completed');
         });
