@@ -14,7 +14,7 @@ if (typeof memos !== "undefined") {
 const limit = memo.limit;
 const memosHost = memo.host.replace(/\/$/, '');
 // API 端点适配 0.18.2 - 使用 creatorId 参数
-const memoUrl = `${memosHost}/api/v1/memos?creatorId=${memo.creatorId}&pageSize=${limit}`;
+const memoUrl = `${memosHost}/api/v1/memos?creatorId=${memo.creatorId}&rowStatus=NORMAL&pageSize=${limit}`;
 
 let page = 1;
 let nextPageToken = '';
@@ -248,7 +248,7 @@ themeToggle.addEventListener("click", () => {
 
 // Memos Total Start
 function getTotal() {
-    fetch(`${memosHost}/api/v1/memos?pageSize=999999999&creatorId=${memo.creatorId}`) // 适配 creatorId
+    fetch(`${memosHost}/api/v1/memos?pageSize=0&creatorId=${memo.creatorId}`) // 适配 creatorId
         .then(res => res.json())
         .then(resdata => {
             if (resdata && resdata.memos) {
