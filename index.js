@@ -4,13 +4,13 @@ const path = require('path');
 const app = express();
 // 设置环境变量
 const memosHost = process.env.MEMOS_HOST || 'https://memos.050815.xyz/';
-const memosLimit = process.env.MEMOS_LIMIT || '20';
+const memosLimit = process.env.MEMOS_LIMIT || '10';
 const memosUserId = process.env.MEMOS_USER_ID || '1';
 const memosTittle = process.env.MEMOS_TITTLE || '喵言堂';
 const memosHead = process.env.MEMOS_HEAD || '';
 const memosMenu = process.env.MEMOS_MENU || '';
-const memosFooter = process.env.MEMOS_FOOTER || 'https://cn.cravatar.com/avatar/1F6C8947D35A8186A1647009BA8BC5F2?size=256';
-const memosIcon = process.env.MEMOS_ICON || '';
+const memosFooter = process.env.MEMOS_FOOTER || '';
+const memosIcon = process.env.MEMOS_ICON || 'https://cn.cravatar.com/avatar/1F6C8947D35A8186A1647009BA8BC5F2?size=256';
 // 静态文件服务
 app.use(express.static(path.join(__dirname, 'public')));
 // 动态生成 HTML
